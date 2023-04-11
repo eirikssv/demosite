@@ -7,3 +7,4 @@ All data er hentet fra [Hva koster strømmen](www.hvakosterstrommen.no) sitt API
 ## Hvorfor?
 
 Ble denne oppdatert nå da?
+Hva med nå?

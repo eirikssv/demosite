@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Strømpriser"
+  subtitle: "En gjennomgang av strømprisene for 2022 og så langt i 2023"
+  author: "Eirik Starheim Svendsen"
+  sidebar: 
+    logo: logo.png
+
+    
+  page-navigation: true
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - intro2.qmd
+    - strom.qmd
+    - stream.ipynb
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: sandstone
+
+
+
+

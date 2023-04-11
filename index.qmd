@@ -1,0 +1,9 @@
+## Hva? {.unnumbered}
+
+Dette er et kort sammendrag av analyser som er gjort på strømpriser for 2022 og så langt i 2023 i Norge, med spesielt fokus på NO3 (Trondheim).
+
+All data er hentet fra [Hva koster strømmen](www.hvakosterstrommen.no) sitt API, som igjen henter priser fra Nordpool.
+
+## Hvorfor?
+
+Fordi!

@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html#hva",
+    "href": "index.html#hva",
+    "title": "Strømpriser",
+    "section": "Hva?",
+    "text": "Hva?\nDette er et kort sammendrag av analyser som er gjort på strømpriser for 2022 og så langt i 2023 i Norge, med spesielt fokus på NO3 (Trondheim).\nAll data er hentet fra Hva koster strømmen sitt API, som igjen henter priser fra Nordpool."
+  },
+  {
+    "objectID": "index.html#hvorfor",
+    "href": "index.html#hvorfor",
+    "title": "Strømpriser",
+    "section": "Hvorfor?",
+    "text": "Hvorfor?\nFordi!"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "2 New header"
+  },
+  {
+    "objectID": "intro.html#subheader",
+    "href": "intro.html#subheader",
+    "title": "1  Introduction",
+    "section": "1.1 Subheader",
+    "text": "1.1 Subheader"
+  },
+  {
+    "objectID": "intro.html#subheader-2",
+    "href": "intro.html#subheader-2",
+    "title": "1  Introduction",
+    "section": "1.2 Subheader 2",
+    "text": "1.2 Subheader 2"
+  },
+  {
+    "objectID": "intro.html#subheader-3",
+    "href": "intro.html#subheader-3",
+    "title": "1  Introduction",
+    "section": "2.1 Subheader 3",
+    "text": "2.1 Subheader 3\n\n2.1.1 Subsubsubs\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "intro2.html",
+    "href": "intro2.html",
+    "title": "2  Introduction2",
+    "section": "",
+    "text": "3 New header"
+  },
+  {
+    "objectID": "intro2.html#subheader",
+    "href": "intro2.html#subheader",
+    "title": "2  Introduction2",
+    "section": "2.1 Subheader",
+    "text": "2.1 Subheader\nTja hva skal man si"
+  },
+  {
+    "objectID": "intro2.html#subheader-2",
+    "href": "intro2.html#subheader-2",
+    "title": "2  Introduction2",
+    "section": "2.2 Subheader 2",
+    "text": "2.2 Subheader 2"
+  },
+  {
+    "objectID": "intro2.html#subheader-3",
+    "href": "intro2.html#subheader-3",
+    "title": "2  Introduction2",
+    "section": "3.1 Subheader 3",
+    "text": "3.1 Subheader 3\n\n3.1.1 Subsubsubs"
+  },
+  {
+    "objectID": "stream.html#denne-figuren-er-nummer-1",
+    "href": "stream.html#denne-figuren-er-nummer-1",
+    "title": "4  Overskrift",
+    "section": "4.1 Denne figuren er nummer 1",
+    "text": "4.1 Denne figuren er nummer 1"
+  },
+  {
+    "objectID": "stream.html#dette-er-figur-nummer-2",
+    "href": "stream.html#dette-er-figur-nummer-2",
+    "title": "4  Overskrift",
+    "section": "4.2 Dette er figur nummer 2",
+    "text": "4.2 Dette er figur nummer 2"
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "5  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  }
+]

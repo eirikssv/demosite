@@ -1,0 +1,204 @@
+# Figurer
+
+
+```{python}
+#| echo: false
+#| eval: true
+#| 
+import pandas as pd
+import plotly.graph_objects as go
+import numpy as np
+from calendar import monthrange
+import requests
+from datetime import datetime
+from datetime import time as dtime
+import time
+import plotly.express as px
+
+def day_night(x):
+    x = pd.Timestamp(x).to_pydatetime().time()
+    if (x >= dtime(6,0,0)) & (x < dtime(22,0,0)):
+        return 'dag'
+    else:
+        return 'natt'
+
+def summer_winter(x):
+    x = pd.Timestamp(x).to_pydatetime().month
+    if (x >= 4) & (x <= 9):
+        return 'sommer'
+    
+    else:
+        return 'vinter'
+    
+def datetime_from_utc_to_local(utc_datetime):
+    now_timestamp = time.time()
+    offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
+    return utc_datetime + offset
+
+def load_pricetable(filnavn):
+    table = pd.read_csv(filnavn)
+    table['time_start'] = datetime_from_utc_to_local(pd.to_datetime(table['time_start'], utc=True)).dt.tz_localize(None)
+    table = table.drop(columns=['time_end', 'EXR', 'EUR_per_kWh'])
+    table['NOK_per_MWh'] = table['NOK_per_kWh'] * 1000
+    table = table[['time_start', 'NOK_per_MWh', 'NOK_per_kWh']]
+    table['time_of_day'] = table.apply(lambda row: day_night(row['time_start']), axis=1)
+    table['time_of_year'] = table.apply(lambda row: summer_winter(row['time_start']), axis=1)
+    return table
+
+#Figur
+data = load_pricetable('Priser_2022_NO3.csv')
+import plotly.graph_objects as go
+from itertools import cycle
+CUSTOM_COLORS = cycle(['#003C65', '#BE3C37', '#14B978', '#780050', '#C89B14', '#0079CB', '#23FFA1', '#0A5D3C', '#FF15B1', '#96740F'])
+
+# marker_color = next(CUSTOM_COLORS)
+
+import plotly.io as pio
+pio.templates['simple_white_cust'] = pio.templates['simple_white']
+#ORIGINALT FARGEKART
+# pio.templates['simple_white_cust']['layout']['colorway'] = ['#003C65', '#14B978', '#CDFAE1', '#004628', '#C89B14', '#BE3C37', '#780050']
+#ENDRET FARGEKART FOR DENNE PUBLIKASJON
+pio.templates['simple_white_cust']['layout']['colorway'] = ['#003C65', '#14B978', '#C89B14', '#BE3C37', '#780050']
+pio.templates['simple_white_cust']['layout']['xaxis']['showgrid'] = True
+pio.templates['simple_white_cust']['layout']['yaxis']['showgrid'] = True
+pio.templates['simple_white_cust']['layout']['font'] = {'color': 'rgb(0,0,0)', 'size': 12, 'family': 'Calibri'}
+pio.templates['simple_white_cust']['layout']['title']['x'] = 0.05
+pio.templates['sintef'] = pio.templates['simple_white_cust']
+def gen_title(title: str, subtitle = False, fontsize = 12, bold = True):
+
+    if subtitle == False:
+        tittel = '<span style="font-size: ' + str(fontsize) + 'px;"><b>' + str(title) + '</b></span>'
+    else:
+        tittel = '<span style="font-size: ' + str(fontsize) + 'px;"><b>' + str(title) + '</b><br>' + str(subtitle) + '</span>'
+    return tittel
+def colormaps(x, turnOn=False):
+    if x == 1:
+        colorlist = ['#003C65', '#14B978', '#CDFAE1', '#004628', '#C89B14', '#BE3C37', '#780050']
+    elif x == 2:
+        colorlist = ['#003C65', '#14B978', '#C89B14', '#BE3C37', '#780050']
+    if turnOn:
+        pio.templates['sintef']['layout']['colorway'] = colorlist
+        
+    return colorlist
+
+fig = go.Figure()
+tempdf = data.copy()
+tempdf = tempdf.iloc[23:,:]
+tempdf['time'] = tempdf['time_start'].dt.time
+
+for date in tempdf['time_start'].dt.date.unique():
+    fig.add_trace(go.Scatter(
+        x=tempdf[tempdf['time_start'].dt.date == date]['time'],
+        y=tempdf[tempdf['time_start'].dt.date == date]['NOK_per_kWh'],
+        mode='lines',
+        opacity=0.1, 
+        line=dict(width=1.5, color="#14B978"), 
+        showlegend=False
+    ))
+#### DE MEST VANLIGE PARAMETRENE ####
+#TITLES & GLOBALS
+CHART_TITLE = 'Timepriser NO3, hver dag 2023'
+X_AXIS_TITLE = 'Time of day'
+Y_AXIS_TITLE = 'NOK/kWh'
+LEGEND_TITLE = ''
+FONTSIZE = 12
+LEGEND_H = True
+WIDTH= 700
+HEIGHT = 300
+
+#XAXES
+XRANGE = [0,25]
+XTICKS = [0, 20, 40, 60, 80, 100]
+XAXIS_TYPE = 'linear'
+XDTICK = 2
+XGRID = True
+
+#YAXES
+YRANGE = [0, 10]
+YTICKS = [0, 20, 40, 60, 80, 100]
+YAXIS_TYPE = 'linear'
+YDTICK = 1
+YGRID = True
+
+#COLORS
+CUSTOM_COLORS = False
+# CUSTOM_COLORS = ['#003C65', '#BE3C37', '#14B978', '#780050', '#C89B14', '#0079CB', '#23FFA1', '#0A5D3C', '#FF15B1', '#96740F']
+
+fig.update_layout(
+    template='sintef',
+    title=gen_title(CHART_TITLE, fontsize=20),
+    xaxis_title='<b>' + X_AXIS_TITLE + '</b>',
+    yaxis_title='<b>' + Y_AXIS_TITLE + '</b> ',
+    title_x=0.1,
+    font=dict(
+        size=FONTSIZE,
+        color="black"
+    ),
+    width=WIDTH,
+    height=HEIGHT,
+    margin=dict(l=5, r=5, t=30, b=5),
+    showlegend=True,
+    legend_title=LEGEND_TITLE
+
+    )
+if LEGEND_H:
+    fig.update_layout(
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+
+#add vertical shape from the hours 22 to 06
+# fig.add_shape(
+#         # Line Vertical
+#         dict(
+#             type="rect",
+#             xref="x",
+#             yref="paper",
+#             x0=0,
+#             y0=0,
+#             x1=6,
+#             y1=1,
+#             line=dict(
+#                 color="DarkBlue",
+#                 width=0
+#             ),
+#             fillcolor="#d08159",
+#             opacity=0.2
+#         )
+#     )
+# fig.add_shape(
+#         # Line Vertical
+#         dict(
+#             type="rect",
+#             xref="x",
+#             yref="paper",
+#             x0=22,
+#             y0=0,
+#             x1=23,
+#             y1=1,
+#             line=dict(
+#                 color="DarkBlue",
+#                 width=0
+#             ),
+#             fillcolor="#d08159",
+#             opacity=0.2
+#         )
+#     )
+fig.add_trace(go.Scatter(
+    x=pd.date_range(start='00:00', end='23:00', freq='H').time,
+    y=[data[data.time_start.dt.hour == i]['NOK_per_kWh'].mean() for i in np.arange(0,24,1)],
+    mode='lines',
+    opacity=1,
+    line=dict(width=3, color="#003C65"),
+    showlegend=True,
+    name='Mean'
+))
+
+fig.show()
+
+```
